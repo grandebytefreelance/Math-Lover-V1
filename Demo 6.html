@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Math Game</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+    }
+    .container {
+        display: flex;
+        justify-content: space-between;
+        margin: 50px auto;
+        width: 80%;
+    }
+    .box {
+        width: 30%;
+        height: 100px;
+        border: 1px solid black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+        background-color: white;
+    }
+    .divider {
+        width: 5%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+    }
+    .result-box {
+        width: 30%;
+        height: 100px;
+        border: 1px solid black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+    }
+    button {
+        font-size: 24px;
+        padding: 10px 20px;
+        margin-top: 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    .footer {
+        text-align: center;
+        margin-top: 50px;
+    }
+</style>
+</head>
+<body>
+<h1 style="text-align: center;">🎉 Math Game 🎉</h1>
+<p style="text-align: center;">
+    Solve the given math problem and enter the answer in the box. Then click the "Check Answer" button to verify your answer.
+</p>
+<div class="container">
+    <div class="box" id="first-number"></div>
+    <div class="divider">÷</div>
+    <div class="box" id="second-number"></div>
+    <div class="divider">=</div>
+    <div class="box" id="user-answer" contenteditable="true"></div>
+</div>
+<p style="text-align: center;" id="score">🌟 Score: 0 🌟</p>
+<button style="display: block; margin: auto;" onclick="checkResult()">Check Answer</button>
+<div class="footer">
+    Created by: Grande Byte
+</div>
+<script>
+    let score = 0;
+    let firstNumber, secondNumber; 
+    function generateNumbers() {
+        do {
+            firstNumber = Math.floor(Math.random() * 10) + 1;
+            secondNumber = Math.floor(Math.random() * 10) + 1;
+        } while (firstNumber % secondNumber !== 0); 
+        
+        document.getElementById('first-number').innerText = firstNumber;
+        document.getElementById('second-number').innerText = secondNumber;
+        
+        return {firstNumber, secondNumber};
+    }
+    
+    generateNumbers();
+
+    function checkResult() {
+        const userAnswer = parseInt(document.getElementById('user-answer').innerText);
+        const correctAnswer = Math.floor(firstNumber / secondNumber); 
+        
+        if (!isNaN(userAnswer) && userAnswer === correctAnswer) {
+            alert('🎉 Congratulations! Correct answer. 🎉');
+            score++; 
+            document.getElementById('score').innerText = '🌟 Score: ' + score + ' 🌟';
+            document.getElementById('user-answer').style.backgroundColor = '#90EE90';
+        } else {
+            alert('🙁 Sorry, wrong answer. Correct answer is: ' + correctAnswer + ' 🙁');
+            if (score > 0) {
+                score--; 
+            }
+            document.getElementById('score').innerText = '🌟 Score: ' + score + ' 🌟';
+            document.getElementById('user-answer').style.backgroundColor = '#FFA07A';
+        }
+
+        generateNumbers();
+        document.getElementById('user-answer').innerText = ''; 
+        document.getElementById('user-answer').style.backgroundColor = 'white'; 
+    }
+</script>
+</body>
+</html>
